@@ -1,0 +1,24 @@
+﻿<div class="jumbotron">
+    <h1>ASP.NET Create excel sheet using EPPlus Open source licence version</h1>
+</div>
+<div class="row">
+    <div class="text-center text-capitalize">
+        <button class="btn btn-primary btn-lg" id="downloadbutton" onclick="downloadQuatationExcel();"> Download Quatation Excel</button>
+    </div>
+</div>
+<script>
+    function downloadQuatationExcel() {
+        // Call Web API to get a list of Product
+        $.ajax({
+            url: '/api/QuatationExcel/1',
+            type: 'GET',
+            dataType: 'json',
+            success: function (products) {
+                productListSuccess(products);
+            },
+            error: function (request, message, error) {
+                handleException(request, message, error);
+            }
+        });
+    }
+</script>
