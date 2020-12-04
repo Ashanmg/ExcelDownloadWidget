@@ -142,6 +142,7 @@ namespace ExcelDownloadWidget.Services
                 quotationForm.Address1 = "C/- COMPANY MANAGER";
                 quotationForm.Address2 = "16A Lifton Highway";
                 quotationForm.Address3 = "Oceanview";
+                quotationForm.PhoneNumber = "0717491236";
 
                 quotationForm.QuotationNumber = "C656062";
                 quotationForm.RepNumber = "2OAN";
