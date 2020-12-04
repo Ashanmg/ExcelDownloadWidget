@@ -32,9 +32,6 @@ namespace ExcelDownloadWidget.Controllers
         // GET api/<controller>/5
         public byte[] Get(int id)
         {
-            // call the database and get the data set to generate the excel sheet:
-
-
             // Create the excel sheet using the retireived data
             using (var package = new ExcelPackage())
             {
@@ -66,8 +63,6 @@ namespace ExcelDownloadWidget.Controllers
 
                 var quotationForm = mockDataService.GetQuotationItemDetailList();
 
-                string output = JsonConvert.SerializeObject(quotationForm);
-
                 //Set column with from column A to F
                 worksheet.Column(1).Width = 15;
 				worksheet.Column(2).Width = 1.8;
@@ -92,44 +87,117 @@ namespace ExcelDownloadWidget.Controllers
 				worksheet.Cells["A19"].Value = "   Fax No:";
 				worksheet.Cells["A20"].Value = "   Attention:";
 
-				var clientNumber = "FOERRATT C/S 2O";
-				var Address1 = "C/- COMPANY MANAGER";
-				var Address2 = "16A Lifton Highway";
-				var Address3 = "Oceanview";
-				var phoneNo = "";
-				var faxNumber = "";
-				var Attention = "";
+				worksheet.Cells["B14"].Value = quotationForm.ClientName;
+				worksheet.Cells["B15"].Value = quotationForm.Address1;
+				worksheet.Cells["B16"].Value = quotationForm.Address2;
+				worksheet.Cells["B17"].Value = quotationForm.Address3;
+				worksheet.Cells["B18"].Value = quotationForm.PhoneNumber;
+				worksheet.Cells["B19"].Value = quotationForm.FaxNumber;
+				worksheet.Cells["B20"].Value = quotationForm.Attention;
 
-				worksheet.Cells["B14"].Value = clientNumber;
-				worksheet.Cells["B15"].Value = Address1;
-				worksheet.Cells["B16"].Value = Address2;
-				worksheet.Cells["B17"].Value = Address3;
-				worksheet.Cells["B18"].Value = phoneNo;
-				worksheet.Cells["B19"].Value = faxNumber;
-				worksheet.Cells["B20"].Value = Attention;
-
-                var clientDetailTextbox02 = worksheet.Drawings.AddShape("Header textbox for client details", eShapeStyle.RoundRect);
-                clientDetailTextbox02.SetPosition(12, 14, 0, 2);
-                clientDetailTextbox02.SetSize(389, 151);
-                clientDetailTextbox02.Fill.Transparancy = 100;
-                clientDetailTextbox02.Border.LineStyle = eLineStyle.Solid;
-                clientDetailTextbox02.Border.Fill.Color = Color.Black;
+                var clientDetailTextbox01 = worksheet.Drawings.AddShape("Header textbox for client details", eShapeStyle.RoundRect);
+                clientDetailTextbox01.SetPosition(12, 14, 0, 2);
+                clientDetailTextbox01.SetSize(389, 151);
+                clientDetailTextbox01.Fill.Transparancy = 100;
+                clientDetailTextbox01.Border.LineStyle = eLineStyle.Solid;
+                clientDetailTextbox01.Border.Fill.Color = Color.Black;
 
                 // Quotation detail section
                 var quotationDetailtextbox01 = worksheet.Drawings.AddShape("Quotation textbox for quotation number label", eShapeStyle.Rect);
-                quotationDetailtextbox01.SetPosition(14, 2, 2, 2);
-                quotationDetailtextbox01.SetSize(68, 23);
+                quotationDetailtextbox01.SetPosition(13, 1, 2, 296);
+                quotationDetailtextbox01.SetSize(99, 17);
                 quotationDetailtextbox01.Text = "Quotation No:";
                 quotationDetailtextbox01.TextAlignment = eTextAlignment.Left;
                 quotationDetailtextbox01.Fill.Color = Color.White;
+                quotationDetailtextbox01.Font.SetFromFont(new Font("Arial", 10));
                 quotationDetailtextbox01.Font.Color = Color.Black;
                 quotationDetailtextbox01.Border.LineStyle = eLineStyle.Solid;
                 quotationDetailtextbox01.Border.Fill.Color = Color.White;
 
+                var quotationDetailtextbox02 = worksheet.Drawings.AddShape("Quotation textbox for Date label", eShapeStyle.Rect);
+                quotationDetailtextbox02.SetPosition(14, 1, 2, 296);
+                quotationDetailtextbox02.SetSize(99, 17);
+                quotationDetailtextbox02.Text = "Date:";
+                quotationDetailtextbox02.TextAlignment = eTextAlignment.Left;
+                quotationDetailtextbox02.Fill.Color = Color.White;
+                quotationDetailtextbox02.Font.SetFromFont(new Font("Arial", 10));
+                quotationDetailtextbox02.Font.Color = Color.Black;
+                quotationDetailtextbox02.Border.LineStyle = eLineStyle.Solid;
+                quotationDetailtextbox02.Border.Fill.Color = Color.White;
+
+                var quotationDetailtextbox03 = worksheet.Drawings.AddShape("Quotation textbox for Rep No label", eShapeStyle.Rect);
+                quotationDetailtextbox03.SetPosition(15, 1, 2, 296);
+                quotationDetailtextbox03.SetSize(99, 17);
+                quotationDetailtextbox03.Text = "Rep No:";
+                quotationDetailtextbox03.TextAlignment = eTextAlignment.Left;
+                quotationDetailtextbox03.Fill.Color = Color.White;
+                quotationDetailtextbox03.Font.SetFromFont(new Font("Arial", 10));
+                quotationDetailtextbox03.Font.Color = Color.Black;
+                quotationDetailtextbox03.Border.LineStyle = eLineStyle.Solid;
+                quotationDetailtextbox03.Border.Fill.Color = Color.White;
+
+                var quotationDetailtextbox04 = worksheet.Drawings.AddShape("Quotation textbox for Rep Name label", eShapeStyle.Rect);
+                quotationDetailtextbox04.SetPosition(16, 1, 2, 296);
+                quotationDetailtextbox04.SetSize(99, 17);
+                quotationDetailtextbox04.Text = "Rep Name:";
+                quotationDetailtextbox04.TextAlignment = eTextAlignment.Left;
+                quotationDetailtextbox04.Fill.Color = Color.White;
+                quotationDetailtextbox04.Font.SetFromFont(new Font("Arial", 10));
+                quotationDetailtextbox04.Font.Color = Color.Black;
+                quotationDetailtextbox04.Border.LineStyle = eLineStyle.Solid;
+                quotationDetailtextbox04.Border.Fill.Color = Color.White;
+
+                var quotationDetailtextbox05 = worksheet.Drawings.AddShape("Quotation textbox for Account No label", eShapeStyle.Rect);
+                quotationDetailtextbox05.SetPosition(17, 1, 2, 296);
+                quotationDetailtextbox05.SetSize(99, 17);
+                quotationDetailtextbox05.Text = "Account No:";
+                quotationDetailtextbox05.TextAlignment = eTextAlignment.Left;
+                quotationDetailtextbox05.Fill.Color = Color.White;
+                quotationDetailtextbox05.Font.SetFromFont(new Font("Arial", 10));
+                quotationDetailtextbox05.Font.Color = Color.Black;
+                quotationDetailtextbox05.Border.LineStyle = eLineStyle.Solid;
+                quotationDetailtextbox05.Border.Fill.Color = Color.White;
+
+                var quotationDetailtextbox06 = worksheet.Drawings.AddShape("Quotation textbox for Position label", eShapeStyle.Rect);
+                quotationDetailtextbox06.SetPosition(18, 1, 2, 296);
+                quotationDetailtextbox06.SetSize(99, 17);
+                quotationDetailtextbox06.Text = "Position:";
+                quotationDetailtextbox06.TextAlignment = eTextAlignment.Left;
+                quotationDetailtextbox06.Fill.Color = Color.White;
+                quotationDetailtextbox06.Font.SetFromFont(new Font("Arial", 10));
+                quotationDetailtextbox06.Font.Color = Color.Black;
+                quotationDetailtextbox06.Border.LineStyle = eLineStyle.Solid;
+                quotationDetailtextbox06.Border.Fill.Color = Color.White;
+
+                var quotationDetailtextbox07 = worksheet.Drawings.AddShape("Quotation textbox for Reference label", eShapeStyle.Rect);
+                quotationDetailtextbox07.SetPosition(19, 1, 2, 296);
+                quotationDetailtextbox07.SetSize(99, 17);
+                quotationDetailtextbox07.Text = "Reference:";
+                quotationDetailtextbox07.TextAlignment = eTextAlignment.Left;
+                quotationDetailtextbox07.Fill.Color = Color.White;
+                quotationDetailtextbox07.Font.SetFromFont(new Font("Arial", 10));
+                quotationDetailtextbox07.Font.Color = Color.Black;
+                quotationDetailtextbox07.Border.LineStyle = eLineStyle.Solid;
+                quotationDetailtextbox07.Border.Fill.Color = Color.White;
+
+                worksheet.Cells["D14"].Value = quotationForm.QuotationNumber;
+                worksheet.Cells["D15"].Formula = "=TODAY()";
+                worksheet.Cells["D16"].Value = quotationForm.RepNumber;
+                worksheet.Cells["D17"].Value = quotationForm.RepName;
+                worksheet.Cells["D18"].Value = quotationForm.AccountNumber;
+                worksheet.Cells["D19"].Value = quotationForm.Position;
+                worksheet.Cells["D20"].Value = quotationForm.Reference;
+
+                var clientDetailTextbox02 = worksheet.Drawings.AddShape("Header textbox for quotation details", eShapeStyle.RoundRect);
+                clientDetailTextbox02.SetPosition(12, 14, 2, 290);
+                clientDetailTextbox02.SetSize(299, 151);
+                clientDetailTextbox02.Fill.Transparancy = 100;
+                clientDetailTextbox02.Border.LineStyle = eLineStyle.Solid;
+                clientDetailTextbox02.Border.Fill.Color = Color.Black;
+                clientDetailTextbox02.Border.Width = 1;
 
                 // Quotation detail section
                 worksheet.Cells["A11:F11"].Merge = true;
-
 
                 //Text Values
                 worksheet.Cells["A22"].Value = "Dear Customer,";
@@ -138,14 +206,7 @@ namespace ExcelDownloadWidget.Controllers
 
                 //Enter quotation details of items and prices section
 
-                var fromRow = 26; 
-                var fromCol = 1;
-                var toRow = 26; // this is the value we need to calculate using the item list length
-                var toCol = 2;
-
-                var defaultRowCount = 26;
-
-                worksheet.Cells[fromRow, fromCol, toRow, toCol].Merge = true;
+                worksheet.Cells[26, 1, 26, 2].Merge = true;
 
                 worksheet.Cells["A26"].Value = "STYLE";
                 worksheet.Cells["C26"].Value = "DESCRIPTION";
@@ -157,6 +218,7 @@ namespace ExcelDownloadWidget.Controllers
                 worksheet.Cells["A26:F26"].Style.VerticalAlignment = ExcelVerticalAlignment.Bottom;
 
                 var currentMaxRowNumber = 26;
+                var defaultRowCount = 26;
 
                 if (defaultRowCount > quotationForm.QuotationItemDetails.Count)
                 {
@@ -257,6 +319,11 @@ namespace ExcelDownloadWidget.Controllers
                 footertextbox02.Font.Color = Color.Black;
                 footertextbox02.Border.LineStyle = eLineStyle.Solid;
                 footertextbox02.Border.Fill.Color = Color.White;
+
+                worksheet.Cells[totalRow + 3, 3].Formula = "=$D$17";
+                worksheet.Cells[totalRow + 3, 4].Formula = "=$B$18";
+                worksheet.Cells[totalRow + 4, 3].Formula = "=SUM(D15+30)";
+
 
                 //get the workbook as a bytearray
                 var excelBytes = package.GetAsByteArray();
