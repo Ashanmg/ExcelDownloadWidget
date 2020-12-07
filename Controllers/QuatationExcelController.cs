@@ -103,82 +103,19 @@ namespace ExcelDownloadWidget.Controllers
                 clientDetailTextbox01.Border.Fill.Color = Color.Black;
 
                 // Quotation detail section
-                var quotationDetailtextbox01 = worksheet.Drawings.AddShape("Quotation textbox for quotation number label", eShapeStyle.Rect);
-                quotationDetailtextbox01.SetPosition(13, 1, 2, 296);
-                quotationDetailtextbox01.SetSize(99, 17);
-                quotationDetailtextbox01.Text = "Quotation No:";
-                quotationDetailtextbox01.TextAlignment = eTextAlignment.Left;
-                quotationDetailtextbox01.Fill.Color = Color.White;
-                quotationDetailtextbox01.Font.SetFromFont(new Font("Arial", 10));
-                quotationDetailtextbox01.Font.Color = Color.Black;
-                quotationDetailtextbox01.Border.LineStyle = eLineStyle.Solid;
-                quotationDetailtextbox01.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, 13, 1, 2, 296, 99, 17, "Quotation No:", "Quotation textbox for quotation number label");
 
-                var quotationDetailtextbox02 = worksheet.Drawings.AddShape("Quotation textbox for Date label", eShapeStyle.Rect);
-                quotationDetailtextbox02.SetPosition(14, 1, 2, 296);
-                quotationDetailtextbox02.SetSize(99, 17);
-                quotationDetailtextbox02.Text = "Date:";
-                quotationDetailtextbox02.TextAlignment = eTextAlignment.Left;
-                quotationDetailtextbox02.Fill.Color = Color.White;
-                quotationDetailtextbox02.Font.SetFromFont(new Font("Arial", 10));
-                quotationDetailtextbox02.Font.Color = Color.Black;
-                quotationDetailtextbox02.Border.LineStyle = eLineStyle.Solid;
-                quotationDetailtextbox02.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, 14, 1, 2, 296, 99, 17, "Date:", "Quotation textbox for Date label");
 
-                var quotationDetailtextbox03 = worksheet.Drawings.AddShape("Quotation textbox for Rep No label", eShapeStyle.Rect);
-                quotationDetailtextbox03.SetPosition(15, 1, 2, 296);
-                quotationDetailtextbox03.SetSize(99, 17);
-                quotationDetailtextbox03.Text = "Rep No:";
-                quotationDetailtextbox03.TextAlignment = eTextAlignment.Left;
-                quotationDetailtextbox03.Fill.Color = Color.White;
-                quotationDetailtextbox03.Font.SetFromFont(new Font("Arial", 10));
-                quotationDetailtextbox03.Font.Color = Color.Black;
-                quotationDetailtextbox03.Border.LineStyle = eLineStyle.Solid;
-                quotationDetailtextbox03.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, 15, 1, 2, 296, 99, 17, "Rep No:", "Quotation textbox for Rep No label");
 
-                var quotationDetailtextbox04 = worksheet.Drawings.AddShape("Quotation textbox for Rep Name label", eShapeStyle.Rect);
-                quotationDetailtextbox04.SetPosition(16, 1, 2, 296);
-                quotationDetailtextbox04.SetSize(99, 17);
-                quotationDetailtextbox04.Text = "Rep Name:";
-                quotationDetailtextbox04.TextAlignment = eTextAlignment.Left;
-                quotationDetailtextbox04.Fill.Color = Color.White;
-                quotationDetailtextbox04.Font.SetFromFont(new Font("Arial", 10));
-                quotationDetailtextbox04.Font.Color = Color.Black;
-                quotationDetailtextbox04.Border.LineStyle = eLineStyle.Solid;
-                quotationDetailtextbox04.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, 16, 1, 2, 296, 99, 17, "Rep Name:", "Quotation textbox for Rep Name label");
 
-                var quotationDetailtextbox05 = worksheet.Drawings.AddShape("Quotation textbox for Account No label", eShapeStyle.Rect);
-                quotationDetailtextbox05.SetPosition(17, 1, 2, 296);
-                quotationDetailtextbox05.SetSize(99, 17);
-                quotationDetailtextbox05.Text = "Account No:";
-                quotationDetailtextbox05.TextAlignment = eTextAlignment.Left;
-                quotationDetailtextbox05.Fill.Color = Color.White;
-                quotationDetailtextbox05.Font.SetFromFont(new Font("Arial", 10));
-                quotationDetailtextbox05.Font.Color = Color.Black;
-                quotationDetailtextbox05.Border.LineStyle = eLineStyle.Solid;
-                quotationDetailtextbox05.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, 17, 1, 2, 296, 99, 17, "Account No:", "Quotation textbox for Account No label");
 
-                var quotationDetailtextbox06 = worksheet.Drawings.AddShape("Quotation textbox for Position label", eShapeStyle.Rect);
-                quotationDetailtextbox06.SetPosition(18, 1, 2, 296);
-                quotationDetailtextbox06.SetSize(99, 17);
-                quotationDetailtextbox06.Text = "Position:";
-                quotationDetailtextbox06.TextAlignment = eTextAlignment.Left;
-                quotationDetailtextbox06.Fill.Color = Color.White;
-                quotationDetailtextbox06.Font.SetFromFont(new Font("Arial", 10));
-                quotationDetailtextbox06.Font.Color = Color.Black;
-                quotationDetailtextbox06.Border.LineStyle = eLineStyle.Solid;
-                quotationDetailtextbox06.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, 18, 1, 2, 296, 99, 17, "Position:", "Quotation textbox for Position label");
 
-                var quotationDetailtextbox07 = worksheet.Drawings.AddShape("Quotation textbox for Reference label", eShapeStyle.Rect);
-                quotationDetailtextbox07.SetPosition(19, 1, 2, 296);
-                quotationDetailtextbox07.SetSize(99, 17);
-                quotationDetailtextbox07.Text = "Reference:";
-                quotationDetailtextbox07.TextAlignment = eTextAlignment.Left;
-                quotationDetailtextbox07.Fill.Color = Color.White;
-                quotationDetailtextbox07.Font.SetFromFont(new Font("Arial", 10));
-                quotationDetailtextbox07.Font.Color = Color.Black;
-                quotationDetailtextbox07.Border.LineStyle = eLineStyle.Solid;
-                quotationDetailtextbox07.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, 19, 1, 2, 296, 99, 17, "Reference:", "Quotation textbox for Reference label");
 
                 worksheet.Cells["D14"].Value = quotationForm.QuotationNumber;
                 worksheet.Cells["D15"].Formula = "=TODAY()";
@@ -300,25 +237,9 @@ namespace ExcelDownloadWidget.Controllers
                 blankline04.SetPosition(totalRow + 4, 0, 3, 3);
                 blankline04.SetSize(143, 0);
 
-                var footertextbox01 = worksheet.Drawings.AddShape("Footer textbox for phone label", eShapeStyle.Rect);
-                footertextbox01.SetPosition(totalRow + 2, 2, 2, 320);
-                footertextbox01.SetSize(68, 23);
-                footertextbox01.Text = "Phone: ";
-                footertextbox01.TextAlignment = eTextAlignment.Left;
-                footertextbox01.Fill.Color = Color.White;
-                footertextbox01.Font.Color = Color.Black;
-                footertextbox01.Border.LineStyle = eLineStyle.Solid;
-                footertextbox01.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, totalRow + 2, 2, 2, 320, 68, 23, "Phone: ", "Footer textbox for phone label");
 
-                var footertextbox02 = worksheet.Drawings.AddShape("Footer textbox for sign label", eShapeStyle.Rect);
-                footertextbox02.SetPosition(totalRow + 3, 12, 2, 320);
-                footertextbox02.SetSize(68, 23);
-                footertextbox02.Text = "Signed:";
-                footertextbox02.TextAlignment = eTextAlignment.Left;
-                footertextbox02.Fill.Color = Color.White;
-                footertextbox02.Font.Color = Color.Black;
-                footertextbox02.Border.LineStyle = eLineStyle.Solid;
-                footertextbox02.Border.Fill.Color = Color.White;
+                CreateReactangleTextBox(worksheet, totalRow + 3, 12, 2, 320, 68, 23, "Signed:", "Footer textbox for sign label");
 
                 worksheet.Cells[totalRow + 3, 3].Formula = "=$D$17";
                 worksheet.Cells[totalRow + 3, 4].Formula = "=$B$18";
@@ -377,6 +298,21 @@ namespace ExcelDownloadWidget.Controllers
             worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Bottom.Color.SetColor(Color.Black);
 
             return toRow;
+        }
+
+        private void CreateReactangleTextBox(ExcelWorksheet worksheet,
+        int Row, int RowOffsetPixels, int Column, int ColumnOffsetPixels,
+        int PixelWidth, int PixelHeight, string text, string shapeName)
+        {
+            var textbox = worksheet.Drawings.AddShape(shapeName, eShapeStyle.Rect);
+            textbox.SetPosition(Row, RowOffsetPixels, Column, ColumnOffsetPixels);
+            textbox.SetSize(PixelWidth, PixelHeight);
+            textbox.Text = text;
+            textbox.TextAlignment = eTextAlignment.Left;
+            textbox.Fill.Color = Color.White;
+            textbox.Font.Color = Color.Black;
+            textbox.Border.LineStyle = eLineStyle.Solid;
+            textbox.Border.Fill.Color = Color.White;
         }
     }
 }
