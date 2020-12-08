@@ -17,12 +17,12 @@ namespace ExcelDownloadWidget.Controllers
 {
     public class QuatationExcelController : ApiController
     {
-        //private readonly IMockDataService _mockDataService;
+        private readonly IMockDataService _mockDataService;
 
-        //public QuatationExcelController(IMockDataService mockDataService)
-        //{
-        //    _mockDataService = mockDataService;
-        //}
+        public QuatationExcelController(IMockDataService mockDataService)
+        {
+            _mockDataService = mockDataService;
+        }
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
@@ -59,9 +59,9 @@ namespace ExcelDownloadWidget.Controllers
                 worksheet.Cells.Style.Font.Size = 10;
 
                 // Get the mock data from the mock data services
-                IMockDataService mockDataService = new MockDataService();
+                // IMockDataService mockDataService = new MockDataService();
 
-                var quotationForm = mockDataService.GetQuotationItemDetailList();
+                var quotationForm = _mockDataService.GetQuotationItemDetailList();
 
                 //Set column with from column A to F
                 worksheet.Column(1).Width = 15;

@@ -10,9 +10,9 @@ using System.Web;
 
 namespace ExcelDownloadWidget.Infrastructures.DependancyConfiguration
 {
-    public class DependancyConfig : Module 
+    public class DependancyConfig
     {
-        protected override void Load(ContainerBuilder builder)
+        public void Load(ContainerBuilder builder)
         {
             builder
                 .RegisterAssemblyTypes(typeof(IRepository).Assembly)
