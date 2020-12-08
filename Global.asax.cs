@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using ExcelDownloadWidget.Infrastructures.DependancyConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace ExcelDownloadWidget
             var builder = new ContainerBuilder();
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            var dependencyConfig = new DependancyConfig();
+            dependencyConfig.Load(builder);
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
