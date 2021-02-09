@@ -117,26 +117,26 @@ namespace ExcelDownloadWidget.Services
                 quotationForm.QuotationItemDetails.Add(detailDto10);
 
                 // adding duplicates to the validate the some steps
-                //quotationForm.Add(detailDto1);
-                //quotationForm.Add(detailDto3);
-                //quotationForm.Add(detailDto2);
-                //quotationForm.Add(detailDto8);
-                //quotationForm.Add(detailDto9);
-                //quotationForm.Add(detailDto1);
-                //quotationForm.Add(detailDto10);
-                //quotationForm.Add(detailDto6);
-                //quotationForm.Add(detailDto4);
-                //quotationForm.Add(detailDto7);
-                //quotationForm.Add(detailDto5);
-                //quotationForm.Add(detailDto9);
-                //quotationForm.Add(detailDto7);
-                //quotationForm.Add(detailDto2);
-                //quotationForm.Add(detailDto3);
-                //quotationForm.Add(detailDto10);
-                //quotationForm.Add(detailDto6);
-                //quotationForm.Add(detailDto5);
-                //quotationForm.Add(detailDto3);
-                //quotationForm.Add(detailDto7);
+                quotationForm.QuotationItemDetails.Add(detailDto1);
+                quotationForm.QuotationItemDetails.Add(detailDto3);
+                quotationForm.QuotationItemDetails.Add(detailDto2);
+                quotationForm.QuotationItemDetails.Add(detailDto8);
+                quotationForm.QuotationItemDetails.Add(detailDto9);
+                quotationForm.QuotationItemDetails.Add(detailDto1);
+                quotationForm.QuotationItemDetails.Add(detailDto10);
+                quotationForm.QuotationItemDetails.Add(detailDto6);
+                quotationForm.QuotationItemDetails.Add(detailDto4);
+                quotationForm.QuotationItemDetails.Add(detailDto7);
+                quotationForm.QuotationItemDetails.Add(detailDto5);
+                quotationForm.QuotationItemDetails.Add(detailDto9);
+                quotationForm.QuotationItemDetails.Add(detailDto7);
+                quotationForm.QuotationItemDetails.Add(detailDto2);
+                quotationForm.QuotationItemDetails.Add(detailDto3);
+                quotationForm.QuotationItemDetails.Add(detailDto10);
+                quotationForm.QuotationItemDetails.Add(detailDto6);
+                quotationForm.QuotationItemDetails.Add(detailDto5);
+                quotationForm.QuotationItemDetails.Add(detailDto3);
+                quotationForm.QuotationItemDetails.Add(detailDto7);
 
                 quotationForm.ClientName = "FOERRATT C/S 2O";
                 quotationForm.Address1 = "C/- COMPANY MANAGER";
