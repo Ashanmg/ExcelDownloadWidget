@@ -1,22 +1,26 @@
 ﻿using ExcelDownloadWidget.Models;
 using ExcelDownloadWidget.Services;
-using Newtonsoft.Json;
+using GemBox.Spreadsheet;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
-using System;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Routing;
 
 namespace ExcelDownloadWidget.Controllers
 {
+    [RoutePrefix("api/excel")]
     public class QuatationExcelController : ApiController
     {
+        private readonly string excelFolderPath = ConfigurationManager.AppSettings["ExcelTemplateFolderPath"].ToString();
         private readonly IMockDataService _mockDataService;
 
         public QuatationExcelController(IMockDataService mockDataService)
@@ -253,54 +257,212 @@ namespace ExcelDownloadWidget.Controllers
             }
         }
 
-        private int CreateQuotationItemDetailTable(int count, ExcelWorksheet worksheet, List<QuotationItemDetailDto> quotationItemList)
+        [HttpGet]
+        [Route("excel-template")]
+        public byte[] GetFromTemplate()
         {
-            var RowNumber = 27;
-            var isColorRow = false;
+            DeleteFilesFromServer(HttpContext.Current.Server.MapPath("/Content/TempFiles"));
+
+            FileInfo existingFile = new FileInfo(HttpContext.Current.Server.MapPath("/Content/ExcelTemplates/quotation_excel-template.xlsx"));
+
+            using (ExcelPackage package = new ExcelPackage(existingFile))
+            {
+                var quotationForm = _mockDataService.GetQuotationItemDetailList();
+
+                var worksheet = package.Workbook.Worksheets.First();
+
+                worksheet.Cells["B14"].Value = quotationForm.ClientName;
+                worksheet.Cells["B15"].Value = quotationForm.Address1;
+                worksheet.Cells["B16"].Value = quotationForm.Address2;
+                worksheet.Cells["B17"].Value = quotationForm.Address3;
+                worksheet.Cells["B18"].Value = quotationForm.PhoneNumber;
+                worksheet.Cells["B19"].Value = quotationForm.FaxNumber;
+                worksheet.Cells["B20"].Value = quotationForm.Attention;
+
+                worksheet.Cells["D14"].Value = quotationForm.QuotationNumber;
+                worksheet.Cells["D16"].Value = quotationForm.RepNumber;
+                worksheet.Cells["D17"].Value = quotationForm.RepName;
+                worksheet.Cells["D18"].Value = quotationForm.AccountNumber;
+                worksheet.Cells["D19"].Value = quotationForm.Position;
+                worksheet.Cells["D20"].Value = quotationForm.Reference;
+
+                var defaultRowCount = 26;
+
+                if (defaultRowCount > quotationForm.QuotationItemDetails.Count)
+                {
+                    CreateQuotationItemDetailTable(defaultRowCount, worksheet, quotationForm.QuotationItemDetails);
+                }
+                else
+                {
+                    CreateQuotationItemDetailTable(quotationForm.QuotationItemDetails.Count, worksheet, quotationForm.QuotationItemDetails);
+                }
+
+                AddFileFolderToServer(HttpContext.Current.Server.MapPath("/Content/TempFiles"));
+
+                var destinationFile = new FileInfo(HttpContext.Current.Server.MapPath("/Content/TempFiles/tempquotationexcel.xlsx"));
+
+                package.SaveAs(destinationFile);
+            }
+
+            // If using Professional version, put your serial key below.
+            SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
+
+            // In order to convert Excel to PDF, we just need to:
+            //   1. Load XLS or XLSX file into ExcelFile object.
+            //   2. Save ExcelFile object to PDF file.
+            ExcelFile workbook = ExcelFile.Load(HttpContext.Current.Server.MapPath("/Content/TempFiles/tempquotationexcel.xlsx"));
+
+            var wwww = workbook.Worksheets.FirstOrDefault();
+            workbook.Worksheets.ActiveWorksheet = wwww;
+
+            CellRange range = wwww.Cells.GetSubrange("A1:F62");
+
+            wwww.NamedRanges.SetPrintArea(range);
+
+            workbook.Save(HttpContext.Current.Server.MapPath("/Content/TempFiles/converted.pdf"));
+
+            PdfDocument outputDocument = new PdfDocument();
+            PdfDocument inputDocument = PdfReader.Open(HttpContext.Current.Server.MapPath("/Content/TempFiles/converted.pdf"), PdfDocumentOpenMode.Import);
+
+            int count = inputDocument.PageCount;
+            for (int idx = 0; idx < count; idx++)
+            {
+                PdfPage page = inputDocument.Pages[idx];
+                outputDocument.AddPage(page);
+            }
+
+            byte[] combinedBytes;
+
+            using (MemoryStream rms = new MemoryStream())
+            {
+                outputDocument.Save(rms, false);
+                combinedBytes = rms.ToArray();
+            }
+
+            //get the workbook as a bytearray
+            return combinedBytes;
+        }
+
+        [Route("download-quotation")]
+        [HttpGet]
+        public byte[] DownloadQuotation()
+        {
+            bool withDiscount = false;
+
+            FileInfo existingFile;
+            if (withDiscount)
+            {
+                existingFile = new FileInfo(HttpContext.Current.Server.MapPath(string.Format("{0}{1}", excelFolderPath, "quotation_excel-template1.xlsx")));
+            }
+            else
+            {
+                existingFile = new FileInfo(HttpContext.Current.Server.MapPath(string.Format("{0}{1}", excelFolderPath, "quotation_excel-template2.xlsx")));
+            }
+
+            using (ExcelPackage package = new ExcelPackage(existingFile))
+            {
+                var quotationForm = _mockDataService.GetQuotationItemDetailList();
+
+                var worksheet = package.Workbook.Worksheets.First();
+
+                worksheet.Cells["B14"].Value = quotationForm.ClientName;
+                worksheet.Cells["B15"].Value = quotationForm.Address1;
+                worksheet.Cells["B16"].Value = quotationForm.Address2;
+                worksheet.Cells["B17"].Value = quotationForm.Address3;
+                worksheet.Cells["B18"].Value = quotationForm.PhoneNumber;
+                worksheet.Cells["B19"].Value = quotationForm.FaxNumber;
+                worksheet.Cells["B20"].Value = quotationForm.Attention;
+
+                worksheet.Cells["D14"].Value = quotationForm.QuotationNumber;
+                worksheet.Cells["D16"].Value = quotationForm.RepNumber;
+                worksheet.Cells["D17"].Value = quotationForm.RepName;
+                worksheet.Cells["D18"].Value = quotationForm.AccountNumber;
+                worksheet.Cells["D19"].Value = quotationForm.Position;
+                worksheet.Cells["D20"].Value = quotationForm.Reference;
+
+                var defaultRowCount = 26;
+
+                if (defaultRowCount > quotationForm.QuotationItemDetails.Count)
+                {
+                    InsertQuotationItemDetails(defaultRowCount, worksheet, quotationForm.QuotationItemDetails, withDiscount);
+                }
+                else
+                {
+                    InsertQuotationItemDetails(quotationForm.QuotationItemDetails.Count, worksheet, quotationForm.QuotationItemDetails, withDiscount);
+                }
+
+                //get the workbook as a bytearray
+                return package.GetAsByteArray();
+            }
+        }
+
+        private int CreateQuotationItemDetailTable(int count, OfficeOpenXml.ExcelWorksheet worksheet, List<QuotationItemDetailDto> quotationItemList)
+        {
+            var RowNumber = 29;
 
             for (int i = 0; i < count; i++)
             {
-                worksheet.Cells[RowNumber, 1, RowNumber, 2].Merge = true;
-
-                if (isColorRow)
-                {
-                    worksheet.Cells[RowNumber, 1, RowNumber, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    worksheet.Cells[RowNumber, 1, RowNumber, 6].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(1, 255, 255, 153));
-                }
-
-                isColorRow = !isColorRow;
-
                 if (i < quotationItemList.Count)
                 {
                     worksheet.Cells[RowNumber, 1, RowNumber, 1].Value = quotationItemList[i].Style;
                     worksheet.Cells[RowNumber, 3, RowNumber, 3].Value = quotationItemList[i].Description;
                     worksheet.Cells[RowNumber, 4, RowNumber, 4].Value = quotationItemList[i].Quantity;
-                    worksheet.Cells[RowNumber, 5, RowNumber, 5].Value = quotationItemList[i].UnitPrice;
-                    worksheet.Cells[RowNumber, 6, RowNumber, 6].Value = quotationItemList[i].Total;
+                    worksheet.Cells[RowNumber, 7, RowNumber, 7].Value = quotationItemList[i].UnitPrice;
                 }
-
                 RowNumber++;
             }
 
-            var fromRow = 26;
-            var toRow = fromRow + count;
+            var defaultItemrows = 26;
+            if (defaultItemrows > quotationItemList.Count)
+            {
+                worksheet.DeleteRow(56, 973, true);
+            }
+            else
+            {
+                var numberOfRowsToDelete = 1029 - (RowNumber + quotationItemList.Count);
+                worksheet.DeleteRow(RowNumber + quotationItemList.Count, numberOfRowsToDelete, true);
+            }
 
-            //Apply number format
-            worksheet.Cells[fromRow + 1, 5, toRow, 6].Style.Numberformat.Format = "$.00";
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Top.Color.SetColor(Color.Black);
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Right.Color.SetColor(Color.Black);
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Left.Color.SetColor(Color.Black);
-            worksheet.Cells[fromRow, 1, toRow, 6].Style.Border.Bottom.Color.SetColor(Color.Black);
-
-            return toRow;
+            return 1;
         }
 
-        private void CreateReactangleTextBox(ExcelWorksheet worksheet,
+        private void InsertQuotationItemDetails(int count, OfficeOpenXml.ExcelWorksheet worksheet, List<QuotationItemDetailDto> quotationItemList, bool withDiscount)
+        {
+            var RowNumber = 29;
+
+            for (int i = 0; i < count; i++)
+            {
+                if (i < quotationItemList.Count)
+                {
+                    worksheet.Cells[RowNumber, 1, RowNumber, 1].Value = quotationItemList[i].Style;
+                    worksheet.Cells[RowNumber, 3, RowNumber, 3].Value = quotationItemList[i].Description;
+                    worksheet.Cells[RowNumber, 4, RowNumber, 4].Value = quotationItemList[i].Quantity;
+                    if (withDiscount)
+                    {
+                        worksheet.Cells[RowNumber, 7, RowNumber, 7].Value = quotationItemList[i].UnitPrice;
+                    }
+                    else
+                    {
+                        worksheet.Cells[RowNumber, 5, RowNumber, 5].Value = quotationItemList[i].UnitPrice;
+                    }
+                }
+                RowNumber++;
+            }
+
+            var defaultItemrows = 26;
+            if (defaultItemrows > quotationItemList.Count)
+            {
+                var deleteFrom = 56;
+                worksheet.DeleteRow(deleteFrom, 973, true);
+            }
+            else
+            {
+                var numberOfRowsToDelete = 974 - (quotationItemList.Count - defaultItemrows);
+                worksheet.DeleteRow(RowNumber, numberOfRowsToDelete, true);
+            }
+        }
+
+        private void CreateReactangleTextBox(OfficeOpenXml.ExcelWorksheet worksheet,
         int Row, int RowOffsetPixels, int Column, int ColumnOffsetPixels,
         int PixelWidth, int PixelHeight, string text, string shapeName)
         {
@@ -314,5 +476,21 @@ namespace ExcelDownloadWidget.Controllers
             textbox.Border.LineStyle = eLineStyle.Solid;
             textbox.Border.Fill.Color = Color.White;
         }
+
+        public void DeleteFilesFromServer(string tempfolderpath)
+        {
+            if (Directory.Exists(tempfolderpath))
+            {
+                Directory.Delete(tempfolderpath, true);
+            }
+        }
+
+        public void AddFileFolderToServer(string tempfolderpath)
+        {
+            if (!Directory.Exists(tempfolderpath))
+            {
+                Directory.CreateDirectory(tempfolderpath);
+            }
+        }
     }
-}
+} 

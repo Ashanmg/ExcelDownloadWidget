@@ -10,7 +10,7 @@
     function downloadQuatationExcel() {
         // Call Web API to get a list of Product
         $.ajax({
-            url: '/api/QuatationExcel/1',
+            url: '/api/excel/download-quotation',
             type: 'GET',
             dataType: 'json',
             success: function (data) {

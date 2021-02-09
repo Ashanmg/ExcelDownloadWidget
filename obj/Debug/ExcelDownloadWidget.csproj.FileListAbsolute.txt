@@ -66,11 +66,16 @@ E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\An
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Autofac.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Autofac.Integration.WebApi.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\AutoMapper.dll
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\BouncyCastle.Crypto.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\EPPlus.dll
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\GemBox.Spreadsheet.dll
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\itextsharp.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Microsoft.Bcl.AsyncInterfaces.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Microsoft.Web.Infrastructure.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Newtonsoft.Json.dll
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\PdfSharp.Charting.dll
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\PdfSharp.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\System.Buffers.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\System.Diagnostics.DiagnosticSource.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\System.Memory.dll
@@ -94,7 +99,11 @@ E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Au
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Autofac.Integration.WebApi.xml
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\AutoMapper.xml
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\EPPlus.xml
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\GemBox.Spreadsheet.xml
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\itextsharp.xml
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Microsoft.Bcl.AsyncInterfaces.xml
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\PdfSharp.xml
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\PdfSharp.Charting.xml
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\System.Buffers.xml
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\System.Diagnostics.DiagnosticSource.xml
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\System.Memory.xml
@@ -114,6 +123,8 @@ E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Sy
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\System.Web.WebPages.Razor.xml
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Antlr3.Runtime.pdb
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\de\PdfSharp.resources.dll
+E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\bin\de\PdfSharp.Charting.resources.dll
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\obj\Debug\ExcelDownloadWidget.csprojAssemblyReference.cache
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\obj\Debug\ExcelDownloadWidget.csproj.CoreCompileInputs.cache
 E:\NZ Projects\Dummy Projects Related to Office Works\ExcelDownloadWidget\obj\Debug\ExcelDownloadWidget.csproj.CopyComplete
